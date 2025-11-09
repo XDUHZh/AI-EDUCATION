@@ -1,0 +1,17 @@
+def __init__(
+        self,
+        name: str,
+        model: str,
+        api_key: str,
+        base_url: str,
+        temperature: float = 0.0,
+        answer_max_tokens: int = 1024,
+        test_max_tokens: int = 2048,
+        use_few_shot: bool = False,
+        num_if_few_shots: int = 5,
+        include_pretest_info: bool = True,
+        recommended_answer_token_limit: int = 150,
+        recommended_test_token_limit: int = 1024,
+        max_tokens_rerun_threshold_percentage: float = 0.8,
+        answer_retries: int = 3,
+    ):
