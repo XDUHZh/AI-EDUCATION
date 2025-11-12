@@ -84,3 +84,25 @@ Please provide your evaluation of both teachers:
     parsed_evaluation = self.parse_evaluation(evaluation)
 
     return parsed_evaluation
+
+    def deanonymize_evaluation(self, evaluation: str, teacher_map: Dict[str, str]) -> str:
+        for anonymous_name, actual_name in teacher_map.items():
+            # Replace the teacher keys
+            evaluation = evaluation.replace(f'"{anonymous_name}":', f'"{actual_name}":')
+
+            # Replace teacher references in the analysis texts
+            evaluation = evaluation.replace(f'Teacher {anonymous_name[-1]}', actual_name)
+
+        # Replace the choice
+        choice_map = {
+            '"choice": "A"': f'"choice": "{teacher_map["teacher_a"]}"',
+            '"choice":"A"': f'"choice":"{teacher_map["teacher_a"]}"',
+            '"choice": "B"': f'"choice": "{teacher_map["teacher_b"]}"',
+            '"choice":"B"': f'"choice":"{teacher_map["teacher_b"]}"',
+            '"choice": "C"': '"choice": "Tie"',
+            '"choice":"C"': '"choice":"Tie"'
+        }
+        for anonymous_choice, actual_choice in choice_map.items():
+            evaluation = evaluation.replace(anonymous_choice, actual_choice)
+
+        return evaluation
